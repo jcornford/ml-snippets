@@ -1,0 +1,41 @@
+---
+title: "ml_snippits"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(iris)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(RColorBrewer)
+pairs(iris[1:4], col=brewer.pal(3,"Set1"), main = "Iris Data -- 3 species")
+#legend(0.045,1.05, legend =as.vector(unique(iris$Species)),
+#       fill=brewer.pal(3,"Set1"),bty = "n")
+
+```
+
+##Now let's do LDA, RF, XGBOOST?
+
+```{r}
+library(caret)
+library(MASS) # LDA is in here
+library(randomForest)
+library(xgboost)
+set.seed(7)
+
+# Make test stuff
+test_inds = sample(dim(iris)[1], dim(iris)[1]/4) 
+train_iris = iris[-test_inds,]
+test_iris  = iris[test_inds,]
+
+rf_v1 = randomForest(Species ~., data = iris, importance = TRUE)
+print(rf_v1)
+```
